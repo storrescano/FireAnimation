@@ -5,13 +5,19 @@ public class FlameView extends Canvas implements Runnable{
     int y;
     Boolean animated = true;
     int delay = 12;
-    Flame  flame = null;
-    public FlameView(int x,int y){
+
+    public ColorPallet getColorPallet() {
+        return colorPallet;
+    }
+
+    ColorPallet colorPallet;
+    Flame  flame;
+    public FlameView(int x, int y, ColorPallet colorPallet){
         this.x = x;
         this.y = y;
-        ColorPallet colorPallet = new ColorPallet(256);
-        colorPallet.generateColors();
-        flame = new Flame(x, y, colorPallet);
+        this.colorPallet = colorPallet;
+        this.colorPallet.generateColors();
+        flame = new Flame(x, y, this.colorPallet);
 
     };
     public void run() {

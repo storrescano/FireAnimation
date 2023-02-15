@@ -3,9 +3,39 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class ColorPallet {
-    private  int size;
-    private ArrayList<Color> Colors = new ArrayList<Color>();
-    private HashMap<Integer, Color> colorPallet = new HashMap<Integer, Color>();
+    private int size;
+    private ArrayList<Color> Colors = new ArrayList<>();
+    private HashMap<Integer, Color> colorPallet = new HashMap<>();
+
+    private int rMax = 254;
+    private int gMax = 0;
+    private int bMax = 0;
+
+
+    public int getrMax() {
+        return rMax;
+    }
+
+    public int getgMax() {
+        return gMax;
+    }
+
+    public int getbMax() {
+        return bMax;
+    }
+
+    public void setrMax(int rMax) {
+        this.rMax = rMax;
+    }
+
+    public void setgMax(int gMax) {
+        this.gMax = gMax;
+    }
+
+    public void setbMax(int bMax) {
+        this.bMax = bMax;
+    }
+
 
     public ColorPallet(int size) {
         this.size = size;
@@ -42,26 +72,35 @@ public class ColorPallet {
         return color;
     }
 
-    public void generateColors(){
-        float red = 0;
-        float green = 0;
-        float blue = 0;
-        float alpha = 0;
+    public void generateColors() {
+        float red;
+        float green;
+        float blue;
+        float alpha;
+
+        int r = 0;
+        int g = 0;
+        int b = 0;
 
 
-        for (int i = 0; i < getSize(); i++) {
+        for (int l = 0; l < getSize(); l++) {
+            if (r<=getrMax()){
+                r++;
+            }
+            if (g<=getgMax()) {
+                g++;
+            }
+            if (b<=getbMax()){
+                b++;
+            }
 
-            colorPallet.put(i,new Color(i,0,0,255));
-            Color color = colorPallet.get(i);
+            colorPallet.put(l, new Color(r, g, b, 255));
+            Color color = colorPallet.get(l);
             red = color.getRed();
             green = color.getGreen();
             blue = color.getBlue();
             alpha = color.getAlpha();
-            Colors.add(new Color((int) red, (int) green, (int) blue, (int)alpha));
-
-
+            Colors.add(new Color((int) red, (int) green, (int) blue, (int) alpha));
         }
-
-
     }
 }

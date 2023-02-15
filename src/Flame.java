@@ -59,7 +59,7 @@ public class Flame {
 //                ImgArray[pos] = Math.random() > 0.55 ? 0 : 255;
                 ImgArray[pos]=0;
                 int random = (int)(Math.random()*100);
-                if(random > 75){
+                if(random < 40){
                     ImgArray[pos] = 255;
                 }
             }
@@ -67,7 +67,7 @@ public class Flame {
     }
 
     public void completeArray(){
-        int[] ImgArray =getImgArray();
+        int[] ImgArray = getImgArray();
         int[] newImg = ImgArray.clone();
         for (int i = 0; i < height-1; i++) {
             for (int j = 0; j < width-1; j++) {

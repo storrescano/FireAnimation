@@ -1,35 +1,28 @@
 import javax.swing.*;
-import java.io.IOException;
+import java.awt.*;
 
-public class Panel extends JFrame {
-    public Panel() {
-        setup();
-    }
+public class Panel extends JFrame implements Runnable {
 
-    public static void main(String[] args) throws IOException {
-        Panel panel = new Panel();
-        panel.pack();
-        panel.setVisible(true);
-
-    }
 
     public void setup() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
         setSize(500, 500);
-        FlameView flameView = new FlameView(300, 300);
-        add(flameView);
+        ColorPallet colorPallet = new ColorPallet(256);
+        FlameView flameView = new FlameView(500, 500, colorPallet);
+        ControlPanel controler = new ControlPanel(this.getContentPane(), colorPallet);
+        add(controler, BorderLayout.WEST);
+        add(flameView, BorderLayout.EAST);
         Thread thread = new Thread(flameView);
         thread.start();
+
+        pack();
+        setVisible(true);
     }
 
-    private static JFrame buildFrame() {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setSize(500, 500);
-        frame.setVisible(true);
-        return frame;
+    @Override
+    public void run() {
+        setup();
     }
-
-
 }
 
