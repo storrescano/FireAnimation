@@ -1,8 +1,7 @@
 public class Main {
     public static void main(String[] args) {
-        Panel panel = new Panel();
-        Thread thread = new Thread(panel);
-        thread.start();
-
+        ColorPallet colorPallet = new ColorPallet(255);
+        FlameView flameView = new FlameView(500, 500, colorPallet);
+        Panel panel = new Panel(flameView);
     }
 }
