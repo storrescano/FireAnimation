@@ -1,12 +1,8 @@
 public class Controller {
-    private FlameView flameView;
 
     private Thread flameThreadView;
     private Flame flame;
 
-    public void setFlameView(FlameView flameView){
-        this.flameView = flameView;
-    }
 
     public void setSparkles(int value){
         flame.setSparksIntensity(value);

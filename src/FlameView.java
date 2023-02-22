@@ -64,7 +64,8 @@ public class FlameView extends Canvas implements Runnable {
     }
 
     public void stop(){
-        controller.stopThread();
+        setBackground(Color.black);
+
         animated = false;
     }
 

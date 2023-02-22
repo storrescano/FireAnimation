@@ -89,9 +89,9 @@ public class ColorPallet {
         int g = 0;
         int b = 0;
 
-        int gMid = 0;
+        /*int gMid = 0;
         int rMid = 0;
-        int bMid = 0;
+        int bMid = 0;*/
 
         colorArrayList = new ArrayList<>();
         for (int l = 0; l < getSize(); l++) {
