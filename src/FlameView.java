@@ -14,7 +14,7 @@ public class FlameView extends Canvas implements Runnable {
     }
 
     private final ColorPallet colorPallet;
-    private final Flame flame;
+    private Flame flame;
 
     private final Controller controller;
 
@@ -64,8 +64,7 @@ public class FlameView extends Canvas implements Runnable {
     }
 
     public void stop(){
-        setBackground(Color.black);
-
+        flame = new Flame(x, y, this.colorPallet);
         animated = false;
     }
 

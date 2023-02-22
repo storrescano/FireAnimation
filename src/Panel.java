@@ -124,11 +124,10 @@ public class Panel extends JFrame implements ActionListener, ChangeListener {
     @Override
     public void stateChanged(ChangeEvent e) {
 
-        if (e.getSource() == intensity){
-            controller.setSparkles(intensity.getValue());
-        }
-
         if (flameViewThread.getState() == Thread.State.WAITING) {
+            if (e.getSource() == intensity) {
+                controller.setSparkles(intensity.getValue());
+            }
             this.colorPallet.setrMax(colorR.getValue());
             this.colorPallet.setgMax(colorG.getValue());
             this.colorPallet.setbMax(colorB.getValue());
@@ -140,17 +139,17 @@ public class Panel extends JFrame implements ActionListener, ChangeListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
-        if (e.getSource() == bPlay){
+        if (e.getSource() == bPlay) {
             bPlay.setEnabled(true);
             bPause.setEnabled(true);
             bStop.setEnabled(true);
             flameView.resume();
-        } else if (e.getSource()== bPause) {
+        } else if (e.getSource() == bPause) {
             bPause.setEnabled(false);
             bPlay.setEnabled(true);
             bStop.setEnabled(true);
             flameView.pause();
-        } else{
+        } else {
             bStop.setEnabled(false);
             bPause.setEnabled(true);
             bPlay.setEnabled(true);
