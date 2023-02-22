@@ -11,6 +11,7 @@ public class ColorPallet {
     private int gMax = 0;
     private int bMax = 0;
 
+
     private int alpha = 255;
 
 
@@ -88,8 +89,12 @@ public class ColorPallet {
         int g = 0;
         int b = 0;
 
+        int gMid = 0;
+        int rMid = 0;
+        int bMid = 0;
+
         colorArrayList = new ArrayList<>();
-        for (int l = 0; l < 20; l++) {
+        for (int l = 0; l < getSize(); l++) {
             if (r<=getrMax()){
                 r++;
             }
@@ -110,18 +115,19 @@ public class ColorPallet {
             colorArrayList.add(new Color((int) red, (int) green, (int) blue, (int) alpha));
         }
 
-        for (int l = 20; l < 90; l++) {
-            if (r<=getgMax()){
-                g++;
+
+        /*for (int l = 40; l < 100; l++) {
+            if (bMid<=getrMax()){
+                bMid++;
             }
-            if (g<=getbMax()) {
-                b++;
+            if (rMid<=getgMax()) {
+                rMid++;
             }
-            if (b<=getrMax()){
-                r++;
+            if (gMid<=getbMax()){
+                gMid++;
             }
 
-            colorPallet.put(l, new Color(r, g, b, 255));
+            colorPallet.put(l, new Color(rMid, gMid, bMid, 255));
             Color color = colorPallet.get(l);
             red = color.getRed();
             green = color.getGreen();
@@ -129,9 +135,12 @@ public class ColorPallet {
             alpha = color.getAlpha();
 
             colorArrayList.add(new Color((int) red, (int) green, (int) blue, (int) alpha));
-        }
+        }*/
 
-        for (int l = 90; l < getSize(); l++) {
+
+
+
+        /*for (int l = 90; l < getSize(); l++) {
             if (r<=getbMax()){
                 b++;
             }
@@ -150,7 +159,7 @@ public class ColorPallet {
             alpha = color.getAlpha();
 
             colorArrayList.add(new Color((int) red, (int) green, (int) blue, (int) alpha));
-        }
+        }*/
 
     }
 

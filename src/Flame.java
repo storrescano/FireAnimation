@@ -7,6 +7,8 @@ public class Flame {
     private int[] ImgArray;
     private ColorPallet colorPallet;
 
+    private int sparksIntensity;
+
 
     public int getWidth() {
         return width;
@@ -45,6 +47,7 @@ public class Flame {
 
 
     public Flame(int width, int height, ColorPallet colorPallet) {
+        this.sparksIntensity = 40;
         this.width = width;
         this.height = height;
         this.colorPallet = colorPallet;
@@ -58,12 +61,13 @@ public class Flame {
 //                ImgArray[pos] = Math.random() > 0.55 ? 0 : 255;
                 ImgArray[pos] = 0;
                 int random = (int) (Math.random() * 100);
-                if (random < 40) {
+                if (random < getSparksIntensity()) {
                     ImgArray[pos] = 255;
                 }
             }
         }
     }
+
 
     public void completeArray() {
         int[] ImgArray = getImgArray();
@@ -102,6 +106,15 @@ public class Flame {
         }
 
         return image;
+    }
+
+
+    public int getSparksIntensity() {
+        return sparksIntensity;
+    }
+
+    public void setSparksIntensity(int sparksIntensity) {
+        this.sparksIntensity = sparksIntensity;
     }
 }
 

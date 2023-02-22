@@ -5,11 +5,12 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Panel extends JFrame implements ChangeListener, Runnable {
+public class Panel extends JFrame implements ActionListener, ChangeListener {
 
 
-    private JButton bPlay;
-    private JButton bPause;
+    JButton bPlay;
+    JButton bPause;
+    JButton bStop;
     private JSlider intensity;
     private JSlider colorR;
     private JSlider colorG;
@@ -17,8 +18,10 @@ public class Panel extends JFrame implements ChangeListener, Runnable {
     private Thread flameViewThread;
     private final ColorPallet colorPallet;
     private final FlameView flameView;
+    private final Controller controller;
 
-    public Panel(FlameView flameView) {
+    public Panel(FlameView flameView, Controller controller) {
+        this.controller = controller;
         this.flameView = flameView;
         this.colorPallet = flameView.getColorPallet();
         setup();
@@ -32,6 +35,7 @@ public class Panel extends JFrame implements ChangeListener, Runnable {
         flameViewThread = new Thread(flameView);
         flameViewThread.start();
 
+        controller.setFlameThread(flameViewThread);
         add(controlPanel(), BorderLayout.WEST);
         add(flameView, BorderLayout.EAST);
 
@@ -49,7 +53,7 @@ public class Panel extends JFrame implements ChangeListener, Runnable {
 
         Font font = new Font("Serif", Font.ITALIC, 15);
 
-        intensity = new JSlider(JSlider.VERTICAL, 0, 255, 255);
+        intensity = new JSlider(JSlider.VERTICAL, 0, 100, 40);
         colorR = new JSlider(0, 254, 254);
         colorG = new JSlider(0, 254, 0);
         colorB = new JSlider(0, 254, 0);
@@ -73,8 +77,8 @@ public class Panel extends JFrame implements ChangeListener, Runnable {
         colorB.setPaintTicks(true);
 
         intensity.setFont(font);
-        intensity.setMajorTickSpacing(254);
-        intensity.setMinorTickSpacing(51);
+        intensity.setMajorTickSpacing(100);
+        intensity.setMinorTickSpacing(20);
         intensity.setPaintLabels(true);
         intensity.setPaintTicks(true);
 
@@ -95,20 +99,22 @@ public class Panel extends JFrame implements ChangeListener, Runnable {
 
         bPlay = new JButton("Play");
         bPause = new JButton("Pause");
+        bStop = new JButton("Stop");
+
+        bPlay.setEnabled(false);
 
         botones.add(bPlay);
         botones.add(bPause);
+        botones.add(bStop);
 
         controler.add(botones, c);
         c.gridy = 1;
         c.gridx = 1;
         controler.add(intensity, c);
 
-        bPlay.addActionListener(e -> flameView.resume());
-
-        bPause.addActionListener(e -> flameView.stop());
-
-
+        bPlay.addActionListener(this);
+        bPause.addActionListener(this);
+        bStop.addActionListener(this);
 
 
         return controler;
@@ -117,19 +123,42 @@ public class Panel extends JFrame implements ChangeListener, Runnable {
 
     @Override
     public void stateChanged(ChangeEvent e) {
+
+        if (e.getSource() == intensity){
+            controller.setSparkles(intensity.getValue());
+        }
+
         if (flameViewThread.getState() == Thread.State.WAITING) {
             this.colorPallet.setrMax(colorR.getValue());
             this.colorPallet.setgMax(colorG.getValue());
             this.colorPallet.setbMax(colorB.getValue());
-            this.colorPallet.setAlpha(intensity.getValue());
             this.colorPallet.refreshColor();
         }
         flameView.paint();
     }
 
     @Override
-    public void run() {
+    public void actionPerformed(ActionEvent e) {
+
+        if (e.getSource() == bPlay){
+            bPlay.setEnabled(true);
+            bPause.setEnabled(true);
+            bStop.setEnabled(true);
+            flameView.resume();
+        } else if (e.getSource()== bPause) {
+            bPause.setEnabled(false);
+            bPlay.setEnabled(true);
+            bStop.setEnabled(true);
+            flameView.pause();
+        } else{
+            bStop.setEnabled(false);
+            bPause.setEnabled(true);
+            bPlay.setEnabled(true);
+            flameView.stop();
+        }
 
     }
+
+
 }
 

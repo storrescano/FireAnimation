@@ -13,20 +13,21 @@ public class FlameView extends Canvas implements Runnable {
         return colorPallet;
     }
 
-    private ColorPallet colorPallet;
+    private final ColorPallet colorPallet;
     private final Flame flame;
 
-    public FlameView(int x, int y, ColorPallet colorPallet) {
+    private final Controller controller;
+
+    public FlameView(int x, int y, ColorPallet colorPallet, Controller controller) {
+        this.controller = controller;
         this.x = x;
         this.y = y;
         this.colorPallet = colorPallet;
         this.colorPallet.generateColors();
         flame = new Flame(x, y, this.colorPallet);
+        setFlame(flame);
 
     }
-
-    ;
-
     public void run() {
         while (animated) {
             paint();
@@ -47,7 +48,11 @@ public class FlameView extends Canvas implements Runnable {
         }
     }
 
-    public void stop() {
+    public void setFlame(Flame flame){
+        this.controller.setFlame(flame);
+    }
+
+    public void pause() {
         animated = false;
     }
 
@@ -56,6 +61,11 @@ public class FlameView extends Canvas implements Runnable {
             animated = true;
             lock.notify(); // Notificar a hilo
         }
+    }
+
+    public void stop(){
+        controller.stopThread();
+        animated = false;
     }
 
     public void paint() {
