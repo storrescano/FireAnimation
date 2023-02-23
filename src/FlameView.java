@@ -20,8 +20,8 @@ public class FlameView extends Canvas implements Runnable {
 
     public FlameView(int x, int y, ColorPallet colorPallet, Controller controller) {
         this.controller = controller;
-        this.x = x;
-        this.y = y;
+        this.x = 240;
+        this.y = 120;
         this.colorPallet = colorPallet;
         this.colorPallet.generateColors();
         flame = new Flame(x, y, this.colorPallet);

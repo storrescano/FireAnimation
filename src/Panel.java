@@ -29,19 +29,38 @@ public class Panel extends JFrame implements ActionListener, ChangeListener {
 
     public void setup() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        GridBagConstraints c = new GridBagConstraints();
         setLayout(new BorderLayout());
-        setSize(500, 500);
+        setMinimumSize(new Dimension(750, 500));
 
-        flameViewThread = new Thread(flameView);
-        flameViewThread.start();
+        c.fill = GridBagConstraints.BOTH;
+        c.weighty = 1;
+        c.gridx = 1;
 
         controller.setFlameThread(flameViewThread);
         add(controlPanel(), BorderLayout.WEST);
-        add(flameView, BorderLayout.EAST);
+        addFuego();
 
 
         pack();
         setVisible(true);
+    }
+
+    private void addFuego() {
+        JLayeredPane layeredPane = new JLayeredPane();
+
+        // Agregar el panel de simulación de fuego al JLayeredPane
+        flameView.setBounds(200, 300, 240, 120);
+        layeredPane.add(flameView, 0);
+
+        // Agregar la imagen de fondo al JLayeredPane
+        BackgroundPanel backgroundPanel = new BackgroundPanel();
+        backgroundPanel.setBounds(0, 0, 500, 500);
+        layeredPane.add(backgroundPanel, 1);
+        getContentPane().add(layeredPane, BorderLayout.CENTER);
+
+        flameViewThread = new Thread(flameView);
+        flameViewThread.start();
     }
 
     private JPanel controlPanel() {
@@ -125,9 +144,7 @@ public class Panel extends JFrame implements ActionListener, ChangeListener {
     public void stateChanged(ChangeEvent e) {
 
         if (flameViewThread.getState() == Thread.State.WAITING) {
-            if (e.getSource() == intensity) {
-                controller.setSparkles(intensity.getValue());
-            }
+            this.controller.setSparkles(intensity.getValue());
             this.colorPallet.setrMax(colorR.getValue());
             this.colorPallet.setgMax(colorG.getValue());
             this.colorPallet.setbMax(colorB.getValue());
