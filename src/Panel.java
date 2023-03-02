@@ -121,6 +121,8 @@ public class Panel extends JFrame implements ActionListener, ChangeListener {
         bStop = new JButton("Stop");
 
         bPlay.setEnabled(false);
+        bPause.setEnabled(false);
+        bStop.setEnabled(true);
 
         botones.add(bPlay);
         botones.add(bPause);
